@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# https://gitlab.com/nymtech/
+set -e
+
+GREEN="\e[0;92m"
+YELLOW="\e[0;93m"
+RESET="\e[0m"
+
+SCRIPT_VERSION=1.0
+
+DIR=$(pwd)
+MIXNODE_ID="docker-mixnode"
+MIXNODE_PATH="${HOME}/.nym/mixnodes"
+NYM_VERSION="0.12.1"
+
+if [[ $1 ==  "" ]]
+then
+   echo -e "${RED}No address dectected${RESET}"
+   echo -e "Usage ./init-mixnode <nym address>"
+   exit 1
+fi
+
+WALLET_ADDR="$1"
+
+if [[ -d ${MIXNODE_PATH}/${MIXNODE_ID} ]] 
+then
+    echo -e "${RED}${MIXNODE_ID} exists in ${MIXNODE_PATH}${RESET}\nRemove it to continue"
+    exit 1
+fi
+
+if [[ -d ${DIR}/nym-data/${MIXNODE_ID} ]] 
+then
+    echo -e "${RED}${MIXNODE_ID} exists in ${DIR}/nym-data${RESET}\nRemove it to continue"
+    exit 1
+fi
+
+
+echo -e ""
+echo -e "script version: ${SCRIPT_VERSION}"
+
+if ! command -v wget &> /dev/null; then
+
+   declare -A OS_INFO;
+   OS_INFO[/etc/redhat-release]=yum
+   OS_INFO[/etc/arch-release]=pacman
+   OS_INFO[/etc/gentoo-release]=emerge
+   OS_INFO[/etc/SuSE-release]=zypp
+   OS_INFO[/etc/debian_version]=apt-get
+
+   for f in ${!OS_INFO[@]}
+   do
+       if [[ -f $f ]];then
+           echo Package manager: ${OS_INFO[$f]}
+           PKG_MANAGER=${OS_INFO[$f]}
+       fi
+   done
+
+   if [ -z $PKG_MANAGER ]; then
+     echo "OS cannot be detected. Install wget manually" 
+  else
+     ${PKG_MANAGER} update && ${PKG_MANAGER} -y install wget
+  fi
+
+fi
+
+
+
+wget -q https://github.com/nymtech/nym/releases/download/v${NYM_VERSION}/nym-mixnode -O nym-mixnode
+chmod +x nym-mixnode
+
+./nym-mixnode init --id docker-mixnode --host $(curl ifconfig.me) --wallet-address $WALLET_ADDR
+sed -i '/listening_address/c\listening_address = \"0.0.0.0\"' ${MIXNODE_PATH}/${MIXNODE_ID}/config/config.toml
+sed -i 's/\/root\/\.nym/\/home\/user\/.nym/g' ${MIXNODE_PATH}/${MIXNODE_ID}/config/config.toml
+
+mkdir -p ${DIR}/nym-data/
+mv ${MIXNODE_PATH}/${MIXNODE_ID} ${DIR}/nym-data
+chmod -R 777 ${DIR}/nym-data
+
+echo -e "${GREEN}Mixnode is ready, use docker-compose up -d to start it${RESET}"

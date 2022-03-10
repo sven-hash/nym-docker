@@ -1,0 +1,10 @@
+version: "3.3"  # optional since v1.27.0
+services:
+    mixnode:
+      image: cgibin/nym-mixnode:1.0
+      ports:
+        - "1789:1789"
+        - "8000:8000"
+        - "1790:1790"
+      volumes:
+        - ./nym-data:/home/user/.nym/mixnodes

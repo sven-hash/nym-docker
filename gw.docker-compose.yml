@@ -1,0 +1,9 @@
+version: "3.3"  # optional since v1.27.0
+services:
+    mixnode:
+      image: cgibin/nym-gateway:1.0
+      ports:
+        - "1789:1789"
+        - "9000:9000"
+      volumes:
+        - ./gw-nym-data:/home/user/.nym/gateways
