@@ -1,4 +1,4 @@
-# Mixnode docker
+# Sandbox Mixnode docker
 
 1. Execute `./init-mixnode <nymt address>`
 2. Execute `sudo ufw allow 1789,1790,8000,22,80,443/tcp`
@@ -8,7 +8,7 @@
 
 For more information [https://nymtech.net/docs/stable/run-nym-nodes/nodes/mixnodes](https://nymtech.net/docs/stable/run-nym-nodes/nodes/mixnodes)
 
-# Gateway docker
+# Sandbox Gateway docker
 
 1. Execute `./init-gateway <nymt address>`
 2. Execute `sudo ufw allow 1789,9000,22,80,443/tcp`
