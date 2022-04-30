@@ -1,7 +1,8 @@
-version: "3.3"  # optional since v1.27.0
+version: "3.3" 
 services:
     mixnode:
-      image: cgibin/nym-mixnode:1.0
+      image: cgibin/nym-mixnode:1.0.0
+      restart: unless-stopped
       ports:
         - "1789:1789"
         - "8000:8000"

@@ -1,3 +1,9 @@
+# Mainnet Mixnode docker
+
+**The mainnet release 1.0.0 don't have a binary at this moment. init-mixnode will not work**
+
+You have to compile the branch `release/1.0.0` manually in order to use the mainnet docker image
+
 # Sandbox Mixnode docker
 
 1. Execute `./init-mixnode <nymt address>`

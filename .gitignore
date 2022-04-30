@@ -1,3 +1,4 @@
 .nym
 nym
-*nym-data/
+nym-data/
+.env
