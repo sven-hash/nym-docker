@@ -1,8 +1,19 @@
 # Mainnet Mixnode docker
 
-**The mainnet release 1.0.0 don't have a binary at this moment. init-mixnode will not work**
+1. Execute `./init-mixnode <nym address>`
+2. Execute `sudo ufw allow 1789,1790,8000,22,80,443/tcp`
+2. Start by `docker-compose up -d`
+3. Bond it with [nym-wallet](https://nymtech.net/download/)
+4. Check your node [Nym explorer](https://explorer.nymtech.net/)
 
-You have to compile the branch `release/1.0.0` manually in order to use the mainnet docker image
+For more information [https://nymtech.net/docs/stable/run-nym-nodes/nodes/mixnodes](https://nymtech.net/docs/stable/run-nym-nodes/nodes/mixnodes)
+
+# Delegating
+
+Delegate with [nym-wallet](https://nymtech.net/download/)
+
+
+You can delegate to the [Crystal-Network mixnode](https://crystal-network.ch)
 
 # Sandbox Mixnode docker
 
