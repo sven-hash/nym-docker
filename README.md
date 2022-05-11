@@ -1,3 +1,5 @@
+⚠️**Disclaimer: docker is not suitable for this. Uptime will be very bad** ⚠️
+
 # Mainnet Mixnode docker
 
 1. Execute `./init-mixnode <nym address>`
